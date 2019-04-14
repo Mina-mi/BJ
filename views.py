@@ -41,22 +41,22 @@ def game(request):
         dealer_hands = r.get_redis(token, 'dealer_hands')
 
         if (r.get_redis(token, 'game_now') == False):
-                try:
+            try:
                 if money < int(request.POST['bet']):
                     raise ValueError('too large bet')
-                except ValueError:
-                    msg = '正しくベットしてください'
-                    dictionary = {
-                        'msg' : msg
-                        'dealer_cards' : [],
-                        'dealer_point' : 0,
-                        'player_cards' : [],
-                        'player_point' : 0,
-                        'able_bet' : True,
-                        'money' : money,
-                    }
-                    dictionary.update(csrf(request))
-                    return render(request, 'bjgame2.html', dictionary)
+            except ValueError:
+                msg = '正しくベットしてください'
+                dictionary = {
+                    'msg' : msg,
+                    'dealer_cards' : [],
+                    'dealer_point' : 0,
+                    'player_cards' : [],
+                    'player_point' : 0,
+                    'able_bet' : True,
+                    'money' : money,
+                }
+                dictionary.update(csrf(request))
+                return render(request, 'bjgame2.html', dictionary)
             r.set_redis(token, 'game_now', True)
             money -= int(request.POST['bet'])
             r.set_redis(token, 'money', money)
