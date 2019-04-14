@@ -5,6 +5,13 @@ import random
 import BJGame.redis_helper as r
 import BJGame.blackjack as bj
 
+def conv_image_path(list):
+    tmp = []
+    for i in list:
+        s = str(i[1]) + '_' + str(i[0]).zfill(2) + '.png'
+        tmp.append(s)
+    return tmp
+
 def game(request):
     if request.method == 'GET':
         token = str(random.random())
